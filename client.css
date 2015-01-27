@@ -2,30 +2,61 @@
 	display: block;
 	width: 100%;
 	height: auto;
+	background-color:white;
+	padding-top: 5px;
+	padding-bottom: 10px;
 }
 
 #sign-up{
 	display: block;
 	width: 100%;
 	height: auto;
+	background-color: white;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+#sign-up input, select{
+	display: block;
+	margin: 0 auto;
+	width: 80%;
+}
+
+#sign-in input{
+	display: block;
+	margin: 0 auto;
+	width: 80%;
 }
 
 #right{
 	display: inline-block;
 	width: 250px;
+	float: right;
+	height: 400px;
 	margin-left: 10px;
+}
+
+#right h3{
+	text-align: center;
+	width: auto;
 }
 
 body{
 	display: block;
 	width: 600px;
+	height: 400px;
 	margin: 0 auto;
 	margin-top: 100px;
+	background-color: blue;
 }
 
 #left{
 	display: inline-block;
+	margin: 0 0;
 	width: 340px;
-	height: 400px;
-	border: solid black 1px;
+}
+
+#left img {
+	display: block;
+	width: auto;
 }
