@@ -1,0 +1,30 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<link href="client.css" type="text/css" rel="stylesheet">
+		<script src="client.js" type="text/javascript"></script>
+		<script src="serverstub.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<form name="sign-in" id="sign-in" >
+			<input type="email" name="username" placeholder="Email" autofocus="true">
+			<input type="password" name="password" placeholder="Password">
+			<input type="submit">
+
+		</form>
+		<form name="sign-up" id="sign-up">
+			<input type="email" name="username" required="true" placeholder="Email" required="true">
+			<input type="password" name="password" id="password" placeholder="Enter password" required="true">
+			<input type="password" name="repeat_password" id="repeat_password" placeholder="Repeat password" required="true">
+			<input type="text" name="firstname" id="firstname" placeholder="Firstname" required="true">
+			<input type="text" name="surname" id="surname" placeholder="Family name" required="true">
+			<select required="true">
+				<option value="male">male</option>
+				<option value="male">female</option>
+			</select>
+			<input type="text" name="city" id="city" placeholder="City" required="true">
+			<input type="text" name="country" id="country" placeholder="Country" required="true">
+			<input type="submit">
+		</form>
+	</body>
+</html>
