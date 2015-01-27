@@ -1,19 +1,15 @@
 #sign-in{
 	display: block;
 	width: 100%;
-	height: auto;
+	height: 100px;
 	background-color:white;
-	padding-top: 5px;
-	padding-bottom: 10px;
 }
 
 #sign-up{
 	display: block;
 	width: 100%;
-	height: auto;
+	height: 280px;
 	background-color: white;
-	padding-top: 10px;
-	padding-bottom: 5px;
 }
 
 #sign-up input, select{
@@ -58,5 +54,6 @@ body{
 
 #left img {
 	display: block;
+	height: 400px;
 	width: auto;
 }
