@@ -5,7 +5,8 @@ displayView = function()
 
 window.onload = function()
 {
-	// code that is executed as the page is loaded.
-	// You shall put your own custom code here.
+	var elem = document.getElementById('notlogview');
+	var div = document.getElementById('nonlogview');
+	div.innerHTML = elem.innerHTML;
 	window.alert("Hello TDDD97 !");
 };
