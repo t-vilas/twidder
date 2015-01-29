@@ -16,13 +16,13 @@
 			<img src="./wimage.png"/>
 		</div>
 		<div id="right">
-		<form name="sign-in" id="sign-in" >
+		<form onsubmit="signin();" name="sign-in" id="sign-in" >
 			<input type="email" name="username" placeholder="Email" autofocus="true">
-			<input type="password" name="password" placeholder="Password">
+			<input type="password" name="password" id="sipassword" placeholder="Password">
 			<input type="submit">
 
 		</form>
-		<form name="sign-up" id="sign-up">
+		<form onsubmit="signup();" name="sign-up" id="sign-up">
 			<h3>Sign up here</h3>
 			<input type="email" name="username" required="true" placeholder="Email" required="true">
 			<input type="password" name="password" id="password" placeholder="Enter password" required="true">
