@@ -17,19 +17,19 @@
 		</div>
 		<div id="right">
 		<form onsubmit="signin();" name="sign-in" id="sign-in" >
-			<input type="email" name="username" placeholder="Email" autofocus="true">
+			<input type="email" id="siemail" name="username" placeholder="Email" autofocus="true">
 			<input type="password" name="password" id="sipassword" placeholder="Password">
 			<input type="submit">
 
 		</form>
 		<form onsubmit="signup();" name="sign-up" id="sign-up">
 			<h3>Sign up here</h3>
-			<input type="email" name="username" required="true" placeholder="Email" required="true">
+			<input type="email" id="email" name="username" required="true" placeholder="Email" required="true">
 			<input type="password" name="password" id="password" placeholder="Enter password" required="true">
 			<input type="password" name="repeat_password" id="repeat_password" placeholder="Repeat password" required="true">
 			<input type="text" name="firstname" id="firstname" placeholder="Firstname" required="true">
-			<input type="text" name="surname" id="surname" placeholder="Family name" required="true">
-			<select required="true">
+			<input type="text" name="familyname" id="familyname" placeholder="Family name" required="true">
+			<select id="gender" required="true">
 				<option value="male">male</option>
 				<option value="male">female</option>
 			</select>
@@ -40,6 +40,13 @@
 		</div>
 
 		</script>
+		<script type="text/view" id="logview">
+
+		<div>logged in !!!</div>
+		<button onclick="logout();">LogOut</button>
+
+		</script>
+
 
 	</body>
 </html>
