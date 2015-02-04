@@ -10,15 +10,14 @@ displayView = function()
 		elem = document.getElementById('logview');
 	}
 	div.innerHTML = elem.innerHTML;
+	if (tok != null){
+		tabdisplay(1);
+	}
 };
 
 window.onload = function()
 {
-
 	displayView();
-	/*var elem = document.getElementById('notlogview');
-	var div = document.getElementById('nonlogview');
-	div.innerHTML = elem.innerHTML;*/
 };
 
 function signup(){
@@ -74,3 +73,91 @@ function logout(){
 	displayView();
 	return true;
 };
+
+function tabdisplay(id){
+
+	switch(id){
+		case 1 : 
+
+			document.getElementById('browse').style.display ='none';
+			document.getElementById('account').style.display ='none';
+			var tok = JSON.parse(localStorage.getItem("token"));
+			var res = serverstub.getUserDataByToken(tok);
+			var usr = res.data;
+			var usrinf = document.getElementById('userinfo');
+
+			usrinf.innerHTML = "<div>"+usr.email+"</div><b>"+usr.firstname+"</b><div>"+usr.familyname+"</div><div>"+usr.gender+"</div><div>"+usr.city+"</div><div>"+usr.country+"</div>";
+			
+			reloadwall();
+
+			document.getElementById('home').style.display='block';
+			break;
+		case 2 : 
+			document.getElementById('home').style.display ='none';
+			document.getElementById('account').style.display ='none';
+			document.getElementById('browse').style.display='block';
+			break;
+		case 3 : 
+			document.getElementById('browse').style.display ='none';
+			document.getElementById('home').style.display ='none';
+			document.getElementById('account').style.display='block';
+			break;
+		default:
+			document.getElementById('browse').style.display ='none';
+			document.getElementById('account').style.display ='none';
+			document.getElementById('home').style.display='block';
+			break;
+	}
+
+	return true;
+
+};
+
+
+function changepass()
+{
+
+	var tok = JSON.parse(localStorage.getItem("token"));
+	var oldpass = document.getElementById('oldpwd').value;
+	var newpass = document.getElementById('newpwd').value;
+
+	if (newpass.length < 8){
+		window.alert('password too short (min 8)');
+		return false;
+	}
+
+	var res = serverstub.changePassword(tok, oldpass, newpass);
+
+	window.alert(res.message);
+
+};
+
+
+function postmess()
+{
+	var tok = JSON.parse(localStorage.getItem("token"));
+	var content = document.getElementById('newmess').value;
+
+	var res = serverstub.postMessage(tok, content, null);
+
+	window.alert(res.message);
+
+};
+
+function reloadwall()
+{
+	var tok = JSON.parse(localStorage.getItem("token"));
+	var messages = serverstub.getUserMessagesByToken(tok).data;
+	var wall = document.getElementById('wall');
+		var wallcontent ="";
+		for (var m=0; m<messages.length; m++)
+		{
+			wallcontent += "<h4>"+messages[m].writer+"</h4><p>"+messages[m].content+"</p></br>";
+		};
+		wall.innerHTML = wallcontent;
+};
+
+
+
+
+

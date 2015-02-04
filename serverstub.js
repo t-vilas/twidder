@@ -1,5 +1,5 @@
-    /**
- * Created by TDDD24.
+/**
+ * Created by TDDD97.
  */
 
 var serverstub = new Object();
@@ -14,17 +14,17 @@ if (localStorage.getItem("loggedinusers") == null) {
     loggedInUsers = {};
 }else loggedInUsers = JSON.parse(localStorage.getItem("loggedinusers"));
 
-// local methods
-serverstub.persistUsers = function(){
+// Local methods
+persistUsers = function(){
     localStorage.setItem("users", JSON.stringify(users));
 };
-serverstub.persistLoggedInUsers = function(){
+persistLoggedInUsers = function(){
     localStorage.setItem("loggedinusers", JSON.stringify(loggedInUsers));
 };
-serverstub.tokenToEmail = function(token){
+tokenToEmail = function(token){
     return loggedInUsers[token];
 };
-serverstub.copyUser = function(user){
+copyUser = function(user){
     return JSON.parse(JSON.stringify(user));
 };
 
@@ -38,7 +38,7 @@ serverstub.signIn = function(email, password){
             token += letters[Math.floor(Math.random() * letters.length)];
         }
         loggedInUsers[token] = email;
-        serverstub.persistLoggedInUsers();
+        persistLoggedInUsers();
         return {"success": true, "message": "Successfully signed in.", "data": token};
     } else {
         return {"success": false, "message": "Wrong username or password."};
@@ -46,7 +46,7 @@ serverstub.signIn = function(email, password){
 };
 
 serverstub.postMessage = function(token, content, toEmail){
-    var fromEmail = serverstub.tokenToEmail(token);
+    var fromEmail = tokenToEmail(token);
     if (fromEmail != null) {
         if (toEmail == null) {
             toEmail = fromEmail;
@@ -55,7 +55,7 @@ serverstub.postMessage = function(token, content, toEmail){
             var recipient = users[toEmail];
             var message = {"writer": fromEmail, "content": content};
             recipient.messages.unshift(message);
-            serverstub.persistUsers();
+            persistUsers();
             return {"success": true, "message": "Message posted"};
         } else {
             return {"success": false, "message": "No such user."};
@@ -66,14 +66,14 @@ serverstub.postMessage = function(token, content, toEmail){
 };
 
 serverstub.getUserDataByToken = function(token){
-    var email = serverstub.tokenToEmail(token);
+    var email = tokenToEmail(token);
     return serverstub.getUserDataByEmail(token, email);
 };
 
 serverstub.getUserDataByEmail = function(token, email){
     if (loggedInUsers[token] != null){
         if (users[email] != null) {
-            var match = serverstub.copyUser(users[email]);
+            var match = copyUser(users[email]);
             delete match.messages;
             delete match.password;
             return {"success": true, "message": "User data retrieved.", "data": match};
@@ -85,13 +85,13 @@ serverstub.getUserDataByEmail = function(token, email){
     }
 };
 serverstub.getUserMessagesByToken = function(token){
-    var email = serverstub.tokenToEmail(token);
+    var email = tokenToEmail(token);
     return serverstub.getUserMessagesByEmail(token,email);
 };
 serverstub.getUserMessagesByEmail = function(token, email){
     if (loggedInUsers[token] != null){
         if (users[email] != null) {
-            var match = serverstub.copyUser(users[email]).messages;
+            var match = copyUser(users[email]).messages;
             return {"success": true, "message": "User messages retrieved.", "data": match};
         } else {
             return {"success": false, "message": "No such user."};
@@ -103,7 +103,7 @@ serverstub.getUserMessagesByEmail = function(token, email){
 serverstub.signOut = function(token){
     if (loggedInUsers[token] != undefined){
         delete loggedInUsers[token];
-        serverstub.persistLoggedInUsers();
+        persistLoggedInUsers();
         return {"success": true, "message": "Successfully signed out."};
     } else {
         return {"success": false, "message": "You are not signed in."};
@@ -121,7 +121,7 @@ serverstub.signUp = function(formData){ // {email, password, firstname, familyna
                 "country": formData.country,
                 "messages": []};
             users[formData.email] = user;
-            serverstub.persistUsers();
+            persistUsers();
             return {"success": true, "message": "Successfully created a new user."};
         }else{
             return {"success": false, "message": "Formdata not complete."};
@@ -133,9 +133,10 @@ serverstub.signUp = function(formData){ // {email, password, firstname, familyna
 };
 serverstub.changePassword = function(token, oldPassword, newPassword){
     if (loggedInUsers[token] != null){
-        var email = serverstub.tokenToEmail(token);
+        var email = tokenToEmail(token);
         if (users[email].password == oldPassword){
             users[email].password = newPassword;
+        persistUsers();
             return {"success": true, "message": "Password changed."};
         } else {
             return {"success": false, "message": "Wrong password."};

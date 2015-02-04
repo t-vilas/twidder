@@ -43,8 +43,35 @@
 		<script type="text/view" id="logview">
 
 		<div>logged in !!!</div>
-		<button onclick="logout();">LogOut</button>
+		
+		<button onclick="tabdisplay(1);">Home</button>
+		<button onclick="tabdisplay(2);">Browse</button>
+		<button onclick="tabdisplay(3);">Account</button>
+		<div id="tabcontent"></div>
+			<div id="home">
+			home
+				<div id="userinfo"></div>
+				<form onsubmit="postmess();" id="postmess">
+					<input id="newmess" type="textarea" required="true" placeholder="message">
+					<input type="submit">
+				</form>
+				<div id='wall'></div>
+				<button onclick="reloadwall();">Reload</button>
 
+			</div>
+
+			<div id="browse">Browse </div>
+
+			<div id="account">
+
+				<form id="cgpass" onsubmit="changepass()";>
+					<input type="password" id="oldpwd" required="true" placeholder="old password">
+					<input type="password" id="newpwd" required="true" placeholder="new password">
+					<input type="submit">
+				</form>
+				<button onclick="logout();">LogOut</button>
+
+			</div>
 		</script>
 
 
