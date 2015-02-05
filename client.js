@@ -105,7 +105,7 @@ function tabdisplay(id){
 		default:
 			document.getElementById('browse').style.display ='none';
 			document.getElementById('account').style.display ='none';
-			document.getElementById('home').style.display='block';
+			document.getElementById('home').style.display='none';
 			break;
 	}
 
@@ -133,22 +133,34 @@ function changepass()
 };
 
 
-function postmess()
+function postmess(mail)
 {
 	var tok = JSON.parse(localStorage.getItem("token"));
 	var content = document.getElementById('newmess').value;
+	var res;
+	if (mail) 
+	{
+		content = document.getElementById('newmessonwall').value;
+		var email = JSON.parse(localStorage.getItem("usrmail"));
+		res = serverstub.postMessage(tok, content, email);
 
-	var res = serverstub.postMessage(tok, content, null);
+	} else res = serverstub.postMessage(tok, content, null);
 
 	window.alert(res.message);
 
 };
 
-function reloadwall()
+function reloadwall(type)
 {
 	var tok = JSON.parse(localStorage.getItem("token"));
 	var messages = serverstub.getUserMessagesByToken(tok).data;
 	var wall = document.getElementById('wall');
+	if (type) { 
+		wall=document.getElementById('wallb');
+		var email = JSON.parse(localStorage.getItem("usrmail"));
+		messages = serverstub.getUserMessagesByEmail(tok, email).data; 
+
+	}
 		var wallcontent ="";
 		for (var m=0; m<messages.length; m++)
 		{
@@ -158,6 +170,30 @@ function reloadwall()
 };
 
 
+function finduser()
+{
 
+	var tok = JSON.parse(localStorage.getItem("token"));
+	var mail = document.getElementById('usermail').value;
+
+	var messages = serverstub.getUserMessagesByEmail(tok, mail).data;
+	var wallb = document.getElementById('wallb');
+
+	var res = serverstub.getUserDataByEmail(tok, mail);
+			var usr = res.data;
+			var usrinf = document.getElementById('userwallinfo');
+
+			usrinf.innerHTML = "<div>"+usr.email+"</div><b>"+usr.firstname+"</b><div>"+usr.familyname+"</div><div>"+usr.gender+"</div><div>"+usr.city+"</div><div>"+usr.country+"</div>";
+			
+
+	var wallcontent ="";
+		for (var m=0; m<messages.length; m++)
+		{
+			wallcontent += "<h4>"+messages[m].writer+"</h4><p>"+messages[m].content+"</p></br>";
+		};
+		wallb.innerHTML = wallcontent;
+		localStorage.setItem("usrmail", JSON.stringify(mail));
+		return false;
+};
 
 

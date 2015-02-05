@@ -49,7 +49,7 @@
 		<button onclick="tabdisplay(3);">Account</button>
 		<div id="tabcontent"></div>
 			<div id="home">
-			home
+			
 				<div id="userinfo"></div>
 				<form onsubmit="postmess();" id="postmess">
 					<input id="newmess" type="textarea" required="true" placeholder="message">
@@ -60,7 +60,21 @@
 
 			</div>
 
-			<div id="browse">Browse </div>
+			<div id="browse">
+
+				<form id="finduser" onsubmit="return false;">
+					<input id="usermail" type="email" required="true" placeholder="email">
+					<input type="button" value="Find" onclick="finduser();">
+				</form>
+				<form onsubmit="return false;" id="postmess">
+					<input id="newmessonwall" type="textarea" required="true" placeholder="message">
+					<input type="button" value="Post" onclick="postmess(1);">
+				</form>
+				<div id='userwallinfo'></div>
+				<div id='wallb'></div>
+				<button onclick="reloadwall(1);">Reload</button>
+
+			</div>
 
 			<div id="account">
 
