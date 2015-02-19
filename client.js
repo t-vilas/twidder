@@ -67,7 +67,7 @@ function signin(){
 function logout(){
 	var tok = JSON.parse(localStorage.getItem("token"));
 	localStorage.setItem("token", null);
-	window.alert('youpi3');
+	//window.alert('youpi3');
 	var res = serverstub.signOut(tok);
 
 	displayView();
@@ -86,7 +86,7 @@ function tabdisplay(id){
 			var usr = res.data;
 			var usrinf = document.getElementById('userinfo');
 
-			usrinf.innerHTML = "<div>"+usr.email+"</div><b>"+usr.firstname+"</b><div>"+usr.familyname+"</div><div>"+usr.gender+"</div><div>"+usr.city+"</div><div>"+usr.country+"</div>";
+			usrinf.innerHTML = "<div>Email : "+usr.email+"</div><b>Firstname : "+usr.firstname+"</b><div>Familyname : "+usr.familyname+"</div><div>Gender : "+usr.gender+"</div><div>City : "+usr.city+"</div><div>Country : "+usr.country+"</div>";
 			
 			reloadwall();
 
@@ -96,6 +96,7 @@ function tabdisplay(id){
 			document.getElementById('home').style.display ='none';
 			document.getElementById('account').style.display ='none';
 			document.getElementById('browse').style.display='block';
+			document.getElementById('showwall').style.display ='none';
 			break;
 		case 3 : 
 			document.getElementById('browse').style.display ='none';
@@ -154,19 +155,24 @@ function reloadwall(type)
 {
 	var tok = JSON.parse(localStorage.getItem("token"));
 	var messages = serverstub.getUserMessagesByToken(tok).data;
+	var success = serverstub.getUserMessagesByToken(tok).success;
 	var wall = document.getElementById('wall');
 	if (type) { 
 		wall=document.getElementById('wallb');
 		var email = JSON.parse(localStorage.getItem("usrmail"));
-		messages = serverstub.getUserMessagesByEmail(tok, email).data; 
+		messages = serverstub.getUserMessagesByEmail(tok, email).data;
+		success = serverstub.getUserMessagesByEmail(tok, email).success;
 
 	}
-		var wallcontent ="";
-		for (var m=0; m<messages.length; m++)
-		{
-			wallcontent += "<h4>"+messages[m].writer+"</h4><p>"+messages[m].content+"</p></br>";
-		};
-		wall.innerHTML = wallcontent;
+		//window.alert(messages);
+		if (success) {
+			var wallcontent ="";
+			for (var m=0; m<messages.length; m++)
+			{
+				wallcontent += "<div><h4>"+messages[m].writer+"</h4><p>"+messages[m].content+"</p></div></br>";
+			}
+			wall.innerHTML = wallcontent;
+		}
 };
 
 
@@ -176,23 +182,32 @@ function finduser()
 	var tok = JSON.parse(localStorage.getItem("token"));
 	var mail = document.getElementById('usermail').value;
 
-	var messages = serverstub.getUserMessagesByEmail(tok, mail).data;
-	var wallb = document.getElementById('wallb');
+	document.getElementById('showwall').style.display ='block';
+
+	/*var messages = serverstub.getUserMessagesByEmail(tok, mail).data;
+	var wallb = document.getElementById('wallb');*/
 
 	var res = serverstub.getUserDataByEmail(tok, mail);
-			var usr = res.data;
-			var usrinf = document.getElementById('userwallinfo');
+	localStorage.setItem("usrmail", JSON.stringify(mail));
+	if (res.success) {
+		var usr = res.data;
+		var usrinf = document.getElementById('userwallinfo');
 
-			usrinf.innerHTML = "<div>"+usr.email+"</div><b>"+usr.firstname+"</b><div>"+usr.familyname+"</div><div>"+usr.gender+"</div><div>"+usr.city+"</div><div>"+usr.country+"</div>";
+		usrinf.innerHTML = "<div>Email : "+usr.email+"</div><b>Firstname : "+usr.firstname+"</b><div>Familyname : "+usr.familyname+"</div><div>Gender : "+usr.gender+"</div><div>City : "+usr.city+"</div><div>Country : "+usr.country+"</div>";
 			
-
-	var wallcontent ="";
+		reloadwall(1);
+	}
+	else{
+		document.getElementById('showwall').style.display ='none';
+		window.alert(res.message);
+	}
+	/*var wallcontent ="";
 		for (var m=0; m<messages.length; m++)
 		{
-			wallcontent += "<h4>"+messages[m].writer+"</h4><p>"+messages[m].content+"</p></br>";
+			wallcontent += "<div><h4>"+messages[m].writer+"</h4><p>"+messages[m].content+"</p></div></br>";
 		};
 		wallb.innerHTML = wallcontent;
-		localStorage.setItem("usrmail", JSON.stringify(mail));
+		localStorage.setItem("usrmail", JSON.stringify(mail));*/
 		return false;
 };
 

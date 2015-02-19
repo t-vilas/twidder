@@ -44,19 +44,19 @@
 
 		<div>logged in !!!</div>
 		
-		<button onclick="tabdisplay(1);">Home</button>
-		<button onclick="tabdisplay(2);">Browse</button>
-		<button onclick="tabdisplay(3);">Account</button>
+		<button class="topbtn" onclick="tabdisplay(1);">Home</button>
+		<button class="topbtn" onclick="tabdisplay(2);">Browse</button>
+		<button class="topbtn" onclick="tabdisplay(3);">Account</button>
 		<div id="tabcontent"></div>
 			<div id="home">
 			
 				<div id="userinfo"></div>
 				<form onsubmit="postmess();" id="postmess">
-					<input id="newmess" type="textarea" required="true" placeholder="message">
+					<textarea id="newmess" required="true" rows="4" cols="50"placeholder="message"></textarea>
 					<input type="submit">
 				</form>
 				<div id='wall'></div>
-				<button onclick="reloadwall();">Reload</button>
+				<button class="reload" onclick="reloadwall();">Reload</button>
 
 			</div>
 
@@ -66,13 +66,15 @@
 					<input id="usermail" type="email" required="true" placeholder="email">
 					<input type="button" value="Find" onclick="finduser();">
 				</form>
+				<div id="showwall">
 				<form onsubmit="return false;" id="postmess">
-					<input id="newmessonwall" type="textarea" required="true" placeholder="message">
+					<textarea id="newmessonwall" required="true" rows="4" cols="50" placeholder="message"></textarea>
 					<input type="button" value="Post" onclick="postmess(1);">
 				</form>
 				<div id='userwallinfo'></div>
 				<div id='wallb'></div>
-				<button onclick="reloadwall(1);">Reload</button>
+				<button class="reload" onclick="reloadwall(1);">Reload</button>
+				</div>
 
 			</div>
 
